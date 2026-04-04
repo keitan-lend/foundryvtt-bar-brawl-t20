@@ -258,14 +258,14 @@ Each user (with the appropriate permissions) may store his/her own default resou
 
 ### Remove a bar
 
-In order to get rid of a bar, either use Foundry's `-=key` syntax or set the attribute to an empty string.
+In order to get rid of a bar, either use Foundry's `_del` syntax or set the attribute to an empty string.
 
 ```javascript
 let barId = "b" + randomID(); // ID of the bar you intend to remove
 token.document.update({ [`flags.barbrawl.resourceBars.${barId}.attribute`]: "" });
 
 // Alternative:
-token.document.update({ [`flags.barbrawl.resourceBars.-=${barId}`]: null });
+token.document.update({ [`flags.barbrawl.resourceBars.${barId}`]: _del });
 ```
 
 ### Modify the value of a custom bar

@@ -45,7 +45,7 @@ export const prepareUpdate = function (tokenDoc, newData) {
         }
     } else if (replaceBars) {
         // Clear all bar data.
-        foundry.utils.setProperty(newData, "flags.barbrawl.==resourceBars", {});
+        foundry.utils.setProperty(newData, "flags.barbrawl.resourceBars", _replace({}));
         newData.bar1 = { attribute: null };
         newData.bar2 = { attribute: null };
     }
@@ -71,7 +71,7 @@ export function prepareCreation(tokenDoc) {
         const brawlBars = {};
         if (data.bar1?.attribute) brawlBars.bar1 = getDefaultBar("bar1", data.bar1.attribute, data.displayBars);
         if (data.bar2?.attribute) brawlBars.bar2 = getDefaultBar("bar1", data.bar2.attribute, data.displayBars);
-        tokenDoc.updateSource({ "flags.barbrawl.==resourceBars": brawlBars });
+        tokenDoc.updateSource({ "flags.barbrawl.resourceBars": _replace(brawlBars) });
     }
 
     // Always make the bar container visible.
