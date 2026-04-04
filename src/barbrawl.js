@@ -23,13 +23,6 @@ Hooks.once('init', function () {
     };
 
     registerSettings();
-    Handlebars.registerHelper("barbrawl-concat", function () {
-        let output = "";
-        for (let input of arguments) {
-            if (typeof input !== "object") output += input;
-        }
-        return output;
-    });
 
     foundry.applications.handlebars.loadTemplates(["modules/barbrawl/templates/bar-config.hbs"]);
 });
