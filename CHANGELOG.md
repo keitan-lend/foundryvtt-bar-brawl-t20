@@ -1,3 +1,10 @@
+1.9.1
+- Added support for FoundryVTT v14.
+- Adjusted label font for various grid sizes.
+- Added missing localization for configuration tabs.
+- Removed application name from context menu hook.
+- Fixed disappearing item resources for DnD5e when adding a new bar.
+
 1.9.0
 - Modernized resource configuration UI.
 - Improved token preview of bar changes.
