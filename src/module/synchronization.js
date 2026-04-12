@@ -13,14 +13,13 @@ export const prepareUpdate = function (tokenDoc, newData) {
         const existingBars = foundry.utils.getProperty(tokenDoc._source, "flags.barbrawl.resourceBars") ?? {};
         for (let barId of Object.keys(changedBars)) {
             // Remove bars that were explicitly set to "None" attribute.
-            if (barId.startsWith("-=")) continue; // Already queued for removal
+            const bar = changedBars[barId];
+            if (barId.startsWith("-=") || bar === _del) continue; // Already queued for removal
 
             // Remove bars without attribute.
-            const bar = changedBars[barId];
             if (bar.attribute === "") {
-                delete changedBars[barId];
                 delete newData[barId];
-                changedBars["-=" + barId] = null;
+                changedBars[barId] = _del;
                 continue;
             }
 
@@ -40,7 +39,7 @@ export const prepareUpdate = function (tokenDoc, newData) {
             // Remove bars that are no longer present in the configuration.
             for (let barId of Object.keys(existingBars)) {
                 if (changedBars[barId] || newData[barId]?.attribute) continue;
-                changedBars["-=" + barId] = null;
+                changedBars[barId] = _del;
             }
         }
     } else if (replaceBars) {
@@ -50,6 +49,7 @@ export const prepareUpdate = function (tokenDoc, newData) {
         newData.bar2 = { attribute: null };
     }
 
+    delete newData.flags?.barbrawl?.replaceBars;
     synchronizeUpdate(tokenDoc._source, newData);
 }
 
