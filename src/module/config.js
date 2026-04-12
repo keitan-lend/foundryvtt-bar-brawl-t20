@@ -124,10 +124,13 @@ async function renderResources(config, bars, choices = null) {
  * @returns 
  */
 function prepareContext(config, bars, choices = null) {
-    if (choices) config._initialAttributeChoices = choices;
-    else choices = config._initialAttributeChoices;
+    if (choices) {
+        choices.unshift({ value: "custom", label: "barbrawl.attribute.custom" });
+        config._initialAttributeChoices = choices;
+    } else {
+        choices = config._initialAttributeChoices;
+    }
 
-    choices.unshift({ value: "custom", label: "barbrawl.attribute.custom" });
     return {
         constants: configConsts,
         brawlBars: bars,
