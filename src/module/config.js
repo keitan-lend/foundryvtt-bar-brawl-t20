@@ -40,14 +40,16 @@ export const extendTokenConfig = async function (tokenConfig, html, data) {
     const resourceTab = html.querySelector("div[data-tab='resources']");
     if (!resourceTab) return;
 
+    const bars = api.getBars(tokenConfig.token);
+
     const controlHtml = await foundry.applications.handlebars.renderTemplate(
         "modules/barbrawl/templates/token-resources.hbs",
         { canSaveDefaults, canLoadDefaults },
     );
-    clearNativeBarFields(resourceTab);
+    clearNativeBarFields(resourceTab, bars);
     resourceTab.insertAdjacentHTML("beforeend", controlHtml);
 
-    await renderResources(tokenConfig, api.getBars(tokenConfig.token), data.barAttributes);
+    await renderResources(tokenConfig, bars, data.barAttributes);
 
     tokenConfig.options.actions.addBar = onAddResource;
     tokenConfig.options.actions.deleteBar = onDeleteBar;
@@ -136,8 +138,6 @@ function prepareContext(config, bars, choices = null) {
     return {
         constants: configConsts,
         brawlBars: bars,
-        bar1Attribute: bars.find(bar => bar.id === "bar1")?.attribute,
-        bar2Attribute: bars.find(bar => bar.id === "bar2")?.attribute,
         barAttributes: choices,
         activeBar: config.tabGroups.bars ?? bars[0]?.id,
         activeTab: config.tabGroups.bar ?? "visibility",
@@ -159,8 +159,9 @@ function localizeResources(config, html) {
 /**
  * Removes all bar related form fields from the given tab.
  * @param {HTMLElement} tab The element for the resource tab.
+ * @param {object[]} bars The resource bars to render.
  */
-function clearNativeBarFields(tab) {
+function clearNativeBarFields(tab, bars) {
     const nativeBarFields = [
         tab.querySelector("select[name='displayBars']"),
         tab.querySelector("select[name='bar1.attribute']"),
@@ -168,6 +169,22 @@ function clearNativeBarFields(tab) {
         ...tab.querySelectorAll("div.bar-data"),
     ];
     nativeBarFields.forEach(el => el.closest("div.form-group").remove());
+
+    // Ensure that attributes for native bars are present because the preview relies on them.
+    insertNativeBarField(tab, bars, "bar1");
+    insertNativeBarField(tab, bars, "bar2");
+}
+
+/**
+ * Creates a hidden input element for the attribute of a bar with the given id.
+ * @param {HTMLElement} tab The element for the resource tab.
+ * @param {object[]} bars The resource bars to render.
+ * @param {string} barId The id of the native bar.
+ */
+function insertNativeBarField(tab, bars, barId) {
+    let attribute = bars.find(bar => bar.id === barId)?.attribute;
+    if (attribute === "custom") attribute = null;
+    tab.insertAdjacentHTML("beforeend", `<input type="hidden" name="${barId}.attribute" value="${attribute}"/>`);
 }
 
 /**
