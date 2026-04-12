@@ -174,8 +174,8 @@ async function createResourceBar(token, data, reservedSpace) {
  */
 async function loadBarTextures(data) {
     try {
-        const bgTexture = data.bgImage ? await loadTexture(data.bgImage) : null;
-        const fgTexture = data.fgImage ? await loadTexture(data.fgImage) : null;
+        const bgTexture = data.bgImage ? await foundry.canvas.loadTexture(data.bgImage) : null;
+        const fgTexture = data.fgImage ? await foundry.canvas.loadTexture(data.fgImage) : null;
         return [bgTexture, fgTexture];
     } catch (err) {
         console.error("Bar Brawl | Failed to load bar texture: " + err.message);
