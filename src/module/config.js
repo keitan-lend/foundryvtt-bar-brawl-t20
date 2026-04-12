@@ -124,15 +124,8 @@ async function renderResources(config, bars, choices = null) {
  * @returns 
  */
 function prepareContext(config, bars, choices = null) {
-    if (!choices) {
-        const useTrackable = !foundry.utils.isEmpty(CONFIG.Actor.trackableAttributes);
-        const source = (config.actor?.system instanceof foundry.abstract.DataModel) && useTrackable
-            ? config.actor?.type
-            : config.actor?.system;
-        const tokenCls = foundry.utils.getDocumentClass("Token");
-        const attributes = tokenCls.getTrackedAttributes(source);
-        choices = tokenCls.getTrackedAttributeChoices(attributes);
-    }
+    if (choices) config._initialAttributeChoices = choices;
+    else choices = config._initialAttributeChoices;
 
     choices.unshift({ value: "custom", label: "barbrawl.attribute.custom" });
     return {
