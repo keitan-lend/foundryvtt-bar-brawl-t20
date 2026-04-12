@@ -35,6 +35,32 @@ const barPresets = {
 }
 
 /**
+ * Font properties for different size presets.
+ */
+const fontPresets = {
+    small: {
+        resolution: 3,
+        strokeWidth: 0.5,
+        blurWidth: 1,
+    },
+    normal: {
+        resolution: 2.5,
+        strokeWidth: 1,
+        blurWidth: 2,
+    },
+    large: {
+        resolution: 1.5,
+        strokeWidth: 2,
+        blurWidth: 3,
+    },
+    extraLarge: {
+        resolution: 1,
+        strokeWidth: 4,
+        blurWidth: 4,
+    }
+}
+
+/**
  * Extends the original Token.drawBars() with custom bar rendering. 
  *  The original function is not called. If available, the libWrapper module is
  *  used for better compatibility.
@@ -387,7 +413,7 @@ function drawBarLabel(bar, token, data, value, max) {
         case "percent":
             // Label does not match bar percentage because of possible inversion.
             const percentage = Math.round((Math.clamp(value, 0, max) / max) * 100);
-            createBarLabel(bar, token, data, `${data.label ? data.label + "  " : ""}${percentage}%`);
+            createBarLabel(bar, token, data, `${data.label ? data.label + " " : ""}${percentage}%`);
             break;
         default:
             console.error(`Bar Brawl | Unknown label style ${game.settings.get("barbrawl", "textStyle")}.`);
@@ -402,15 +428,23 @@ function drawBarLabel(bar, token, data, value, max) {
  * @param {string} text The text to display.
  */
 function createBarLabel(bar, token, data, text) {
-    let font = CONFIG.canvasTextStyle.clone();
+    let preset = fontPresets.normal;
+    if (bar.contentHeight <= 8) preset = fontPresets.small;
+    else if (bar.contentHeight >= 16) preset = fontPresets.large;
+    else if (bar.contentHeight >= 24) preset = fontPresets.extraLarge;
+
+    const font = CONFIG.canvasTextStyle.clone();
     font.fontSize = data.fgImage || data.bgImage ? getBarHeight(token, bar.contentWidth) : bar.contentHeight;
+
+    font.dropShadowBlur = preset.blurWidth;
+    font.strokeThickness = preset.strokeWidth;
 
     const barText = new PIXI.Text(text, font);
     barText.name = bar.name + "-text";
     barText.x = bar.contentWidth / 2;
     barText.y = bar.contentHeight / 2;
     barText.anchor.set(0.5);
-    barText.resolution = 2; // Supersample text to ensure readability.
+    barText.resolution = preset.resolution; // Supersample text to ensure readability.
     if (data.invertDirection) barText.scale.x *= -1;
     bar.addChild(barText);
 }
