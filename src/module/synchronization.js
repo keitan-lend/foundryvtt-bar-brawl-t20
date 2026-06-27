@@ -14,7 +14,7 @@ export const prepareUpdate = function (tokenDoc, newData) {
         for (let barId of Object.keys(changedBars)) {
             // Remove bars that were explicitly set to "None" attribute.
             const bar = changedBars[barId];
-            if (barId.startsWith("-=") || bar === _del) continue; // Already queued for removal
+            if (bar === _del) continue; // Already queued for removal
 
             // Remove bars without attribute.
             if (bar.attribute === "") {
@@ -118,7 +118,7 @@ function synchronizeBrawlBar(barId, newData) {
     let brawlBarData = newData.flags.barbrawl.resourceBars[barId];
     if (brawlBarData?.attribute) {
         newData[barId] = { attribute: brawlBarData.attribute === "custom" ? null : brawlBarData.attribute };
-    } else if (newData.flags.barbrawl.resourceBars["-=" + barId] === null) {
+    } else if (brawlBarData === _del) {
         newData[barId] = { attribute: null };
     }
 }
@@ -135,7 +135,7 @@ function synchronizeLegacyBar(barId, tokenData, newData) {
 
     const brawlBars = foundry.utils.getProperty(tokenData, "flags.barbrawl.resourceBars") ?? {};
     const brawlBarChanges = newData.flags.barbrawl.resourceBars;
-    if (!brawlBarChanges[barId]) return; // Already queued for removal.
+    if (brawlBarChanges[barId] === _del) return; // Already queued for removal.
     if (foundryBarData.attribute === null && brawlBarChanges[barId].attribute === "custom") return;
 
     const brawlBarData = brawlBars[barId];
@@ -144,8 +144,7 @@ function synchronizeLegacyBar(barId, tokenData, newData) {
     if (brawlBarData) {
         if (remove) {
             // Remove the bar
-            brawlBarChanges["-=" + barId] = null;
-            delete brawlBarChanges[barId];
+            brawlBarChanges[barId] = _del;
         } else {
             // Change the attribute
             foundry.utils.setProperty(brawlBarChanges, barId + ".attribute", foundryBarData.attribute);
