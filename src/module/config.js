@@ -180,7 +180,7 @@ function clearNativeBarFields(tab, bars) {
 function insertNativeBarField(tab, bars, barId) {
     let attribute = bars.find(bar => bar.id === barId)?.attribute;
     if (attribute === "custom") attribute = null;
-    tab.insertAdjacentHTML("beforeend", `<input type="hidden" name="${barId}.attribute" value="${attribute}"/>`);
+    tab.insertAdjacentHTML("beforeend", `<input type="hidden" name="${barId}.attribute" value="${attribute ?? ""}"/>`);
 }
 
 /**
