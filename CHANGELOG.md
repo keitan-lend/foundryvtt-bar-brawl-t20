@@ -1,3 +1,8 @@
+1.9.2
+- Fixed bar refresh when there are 3 or more resources.
+- Fixed flickering during bar refresh.
+- Fixed deletion of native bars (usually the first two).
+
 1.9.1
 - Added support for FoundryVTT v14.
 - Adjusted label font for various grid sizes.
