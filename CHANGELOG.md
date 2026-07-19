@@ -1,3 +1,6 @@
+1.9.3
+- Fixed bar rendering when any maximum value is 0.
+
 1.9.2
 - Fixed bar refresh when there are 3 or more resources.
 - Fixed flickering during bar refresh.
