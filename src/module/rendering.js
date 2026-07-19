@@ -132,12 +132,12 @@ function drawBrawlBars() {
             const bars = [];
             for (let barData of visibleBars) {
                 const bar = await createResourceBar(this, barData, reservedSpace);
-                bars.push(bar);
+                if (bar) bars.push(bar);
             }
 
             // Modify parent container in one step to avoid flickering.
             this.bars.removeChildren();
-            this.bars.addChild(...bars);
+            if (bars.length) this.bars.addChild(...bars);
             this.bars.visible = this.bars.children.length > 0;
         } finally {
             if (renderingTokens[this.id].data === visibleBars) delete renderingTokens[this.id];
@@ -172,10 +172,10 @@ function drawBrawlBars() {
  * @param {Token} token The token on which to create the bar.
  * @param {Object} data The object containing the bar's data.
  * @param {Object} reservedSpace The amount of already used space per position.
- * @returns {Promise.<PIXI.Container>} The rendered bar.
+ * @returns {Promise.<PIXI.Container>?} The rendered bar.
  */
 async function createResourceBar(token, data, reservedSpace) {
-    if (!data?.max) return;
+    if (!data?.max) return null;
 
     // Create the rendering object
     let bar = new PIXI.Container();
