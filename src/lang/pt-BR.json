@@ -3,7 +3,7 @@
         "translatedBy": "Kharmans",
         "barStyle": {
             "name": "Estilo da Barra",
-            "hint": "Altera como as barras são mostradas.",
+            "hint": "Altera como as barras são exibidas.",
             "minimal": "Minimalista (slim, sem borda)",
             "default": "Padrão Foundry",
             "large": "Grande (larga, borda fina)",
@@ -12,7 +12,7 @@
         "textStyle": {
             "name": "Etiqueta da Barra",
             "hint": "Altera o número mostrado na barra.",
-            "user": "Padrão do usuário",
+            "user": "Padrão do Usuário",
             "none": "Nenhum",
             "fraction": "Fração (valor/máx)",
             "percent": "Porcentagem (%)"
@@ -27,7 +27,7 @@
         },
         "heightMultiplier": {
             "name": "Multiplicador de Altura",
-            "hint": "Multiplica a altura da barra pelo valor configurado para melhorar sua leitura. Isso afetará a etiquera, mas não o fundo ou primeiro plano da imagem da barra."
+            "hint": "Multiplica a altura da barra pelo valor configurado para melhorar sua leitura. Isso afetará a etiqueta, mas não o fundo ou primeiro plano da imagem da barra."
         },
         "cacheBitmaps": {
             "name": "Barras Renderizadas em Cache",
@@ -37,9 +37,9 @@
             "attribute": "Atributo",
             "ownerVisibility": "Visibilidade (dono)",
             "otherVisibility": "Visibilidade (todos)",
-            "gmVisibility": "Visibilidade (MJ)",
+            "gmVisibility": "Visibilidade (Mestre)",
             "hide": "Esconder Barra",
-            "hideHint": "Não exibe a barra quando qualquer uma das opções abaixo seja marcada.",
+            "hideHint": "Não exibe a barra quando qualquer uma das opções abaixo estiver marcada.",
             "hideFull": "Cheia",
             "hideEmpty": "Vazia",
             "hideCombat": "Em Combate",
