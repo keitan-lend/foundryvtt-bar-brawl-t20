@@ -164,7 +164,7 @@ function clearNativeBarFields(tab, bars) {
         tab.querySelector("select[name='bar2.attribute']"),
         ...tab.querySelectorAll("div.bar-data"),
     ];
-    nativeBarFields.forEach(el => el.closest("div.form-group").remove());
+    nativeBarFields.forEach(el => el?.closest("div.form-group").remove());
 
     // Ensure that attributes for native bars are present because the preview relies on them.
     insertNativeBarField(tab, bars, "bar1");

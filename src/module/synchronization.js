@@ -111,8 +111,8 @@ function synchronizeUpdate(tokenData, newData) {
 
 /**
  * Merges the state of a changed Bar Brawl resource bar into FoundryVTT.
- * @param {String} barId The name of the bar to synchronize.
- * @param {Object} newData The data to be merged into the token data.
+ * @param {string} barId The name of the bar to synchronize.
+ * @param {object} newData The data to be merged into the token data.
  */
 function synchronizeBrawlBar(barId, newData) {
     let brawlBarData = newData.flags.barbrawl.resourceBars[barId];
@@ -125,9 +125,9 @@ function synchronizeBrawlBar(barId, newData) {
 
 /**
  * Merges the state of a changed FoundryVTT resource bar with Bar Brawl.
- * @param {String} barId The name of the bar to synchronize.
- * @param {Object} tokenData The data to merge the new data into.
- * @param {Object} newData The data to be merged into the token data.
+ * @param {string} barId The name of the bar to synchronize.
+ * @param {object} tokenData The data to merge the new data into.
+ * @param {object} newData The data to be merged into the token data.
  */
 function synchronizeLegacyBar(barId, tokenData, newData) {
     const foundryBarData = newData[barId];
@@ -136,7 +136,7 @@ function synchronizeLegacyBar(barId, tokenData, newData) {
     const brawlBars = foundry.utils.getProperty(tokenData, "flags.barbrawl.resourceBars") ?? {};
     const brawlBarChanges = newData.flags.barbrawl.resourceBars;
     if (brawlBarChanges[barId] === _del) return; // Already queued for removal.
-    if (foundryBarData.attribute === null && brawlBarChanges[barId].attribute === "custom") return;
+    if (foundryBarData.attribute === null && brawlBarChanges[barId]?.attribute === "custom") return;
 
     const brawlBarData = brawlBars[barId];
     const remove = Object.keys(foundryBarData).length === 0 || foundryBarData.attribute === null;
@@ -151,6 +151,6 @@ function synchronizeLegacyBar(barId, tokenData, newData) {
         }
     } else if (!remove) {
         // Create a new bar with default values
-        brawlBarChanges[barId] ??= getDefaultBar(barId, foundryBarData.attribute, tokenData._source.displayBars);
+        brawlBarChanges[barId] ??= getDefaultBar(barId, foundryBarData.attribute, tokenData.displayBars);
     }
 }
