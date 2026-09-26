@@ -1,0 +1,29 @@
+name: Publicar release do módulo
+
+# Roda sempre que uma tag de versão (ex.: v1.9.4-t20.1) for enviada com "git push --tags".
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Empacotar o módulo (pasta src)
+        run: |
+          cd src
+          zip -r ../module.zip . -x "*.less"
+
+      - name: Publicar release com o module.zip
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            module.zip
+            src/module.json
+          generate_release_notes: true
