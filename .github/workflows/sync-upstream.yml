@@ -34,7 +34,11 @@ jobs:
       - name: Tentar mesclar as atualizações
         id: merge
         continue-on-error: true
-        run: git merge upstream/master --no-edit
+        # --allow-unrelated-histories é necessário porque este fork foi criado com "git init"
+        #  em vez de um clone do original. Depois do primeiro merge bem-sucedido, os dois
+        #  repositórios passam a compartilhar histórico e essa flag deixa de ser necessária
+        #  (mas mantê-la não causa nenhum problema).
+        run: git merge upstream/master --no-edit --allow-unrelated-histories
 
       - name: Publicar as atualizações mescladas
         if: steps.merge.outcome == 'success'
@@ -42,7 +46,9 @@ jobs:
 
       - name: Abrir issue avisando sobre conflito
         if: steps.merge.outcome == 'failure'
-        run: git merge --abort
+        # "|| true" evita que o workflow quebre caso não haja nenhum merge em andamento
+        #  para abortar (ex.: quando o próprio merge falhou antes de começar).
+        run: git merge --abort || true
 
       - name: Criar issue de conflito
         if: steps.merge.outcome == 'failure'
