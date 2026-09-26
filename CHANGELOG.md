@@ -1,3 +1,6 @@
+1.9.4
+- Fixed synchronization with other modules.
+
 1.9.3
 - Fixed bar rendering when any maximum value is 0.
 
