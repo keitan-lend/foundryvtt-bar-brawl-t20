@@ -1,12 +1,15 @@
 {
     "id": "barbrawl",
+
     "title": "Bar Brawl (T20 Fork)",
     "description": "Adds additional options for displaying multiple resource bars on a token. Fork customizado para Tormenta 20, com padrões de barra para novas fichas e quadrados de valor para atributos sem máximo.",
+
     "authors": [
         {
             "name": "Adrian Haberecht",
             "url": "https://gitlab.com/woodentavern",
             "discord": "dj_addi"
+
         },
         {
             "name": "Lucas Henrique Muniz (fork T20)",
@@ -14,6 +17,7 @@
         }
     ],
     "version": "1.9.4-t20.1",
+
     "compatibility": {"minimum": "14.360", "verified": "14.368"},
     "esmodules": ["barbrawl.js"],
     "styles": ["styles/attributeHud.css"],
@@ -30,6 +34,7 @@
         },
         {"lang": "pl", "name": "Polski", "path": "lang/pl.json", "flags": {}}
     ],
+
     "url": "https://github.com/keitan-lend/foundryvtt-bar-brawl-t20",
     "manifest": "https://raw.githubusercontent.com/keitan-lend/foundryvtt-bar-brawl-t20/main/src/module.json",
     "download": "https://github.com/keitan-lend/foundryvtt-bar-brawl-t20/releases/latest/download/module.zip",
@@ -37,6 +42,7 @@
     "readme": "https://github.com/keitan-lend/foundryvtt-bar-brawl-t20/blob/main/README.md",
     "bugs": "https://github.com/keitan-lend/foundryvtt-bar-brawl-t20/issues",
     "changelog": "https://github.com/keitan-lend/foundryvtt-bar-brawl-t20/blob/main/CHANGELOG.md",
+
     "flags": {
         "hotReload": {
             "extensions": ["css", "hbs", "json"],

@@ -177,6 +177,7 @@ function drawBrawlBars() {
 async function createResourceBar(token, data, reservedSpace) {
     if (!data?.max && !data?.isValue) return null;
 
+
     // Create the rendering object
     let bar = new PIXI.Container();
     bar.name = data.id;
