@@ -64,7 +64,6 @@ export const getActualBarValue = function (tokenDoc, bar, resolveValue = true) {
 
     // Apply approximation. Value-only resources have no maximum, so approximation doesn't apply.
     if (!bar.isValue && bar.subdivisions && (bar.subdivisionsOwner || !tokenDoc.isOwner)) {
-
         const maxValue = bar.max || 1;
         const clampedValue = Math.clamp(bar.value, 0, maxValue);
         const approxValue = clampedValue / maxValue * bar.subdivisions;
@@ -170,7 +169,6 @@ export const getVisibleBars = function (tokenDoc, barsOnly = true) {
         // Value-only resources (no maximum) are kept even when only "true" bars are
         //  requested, so that they can be rendered as a value square instead of a bar.
         if (!isBar && !bar.isValue && barsOnly) continue;
-
         visibleBars.push(bar);
     }
 
@@ -189,7 +187,6 @@ function refreshBarValues(tokenDoc, bar) {
         bar.max ??= 0;
         bar.editable = true;
         bar.isValue = false;
-
         return true;
     }
 
@@ -199,7 +196,6 @@ function refreshBarValues(tokenDoc, bar) {
         bar.max = 0;
         bar.editable = false;
         bar.isValue = false;
-
         return false;
     }
 
@@ -210,7 +206,6 @@ function refreshBarValues(tokenDoc, bar) {
     //  flagged as a value-only resource so it can be displayed as a square instead of a bar.
     bar.isValue = !isBar;
     bar.max = isBar ? (resource.max ?? bar.max) : null;
-
     return isBar;
 }
 

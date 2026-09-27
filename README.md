@@ -1,19 +1,18 @@
 # FoundryVTT Bar Brawl (Fork T20)
 
-Este é um fork do [Bar Brawl original](https://gitlab.com/woodentavern/foundryvtt-bar-brawl), mantido em
-https://github.com/keitan-lend/foundryvtt-bar-brawl-t20, com ajustes para uso com **Tormenta 20 1.6.2** no
-**Foundry VTT v14**. O fork é sincronizado automaticamente com o original (ver
-`.github/workflows/sync-upstream.yml`) e adiciona:
-
-Aplicação automática do padrão de barras (definido pelo mestre) a toda ficha nova, por tipo de ator.
-Exibição de atributos que possuem apenas um número (sem atual/máximo, ex.: Defesa) como um **quadrado com o
-valor**, mantendo a etiqueta personalizada — em vez de ficarem ocultos.
-
-**Instalação (link do manifest):**
-`https://raw.githubusercontent.com/keitan-lend/foundryvtt-bar-brawl-t20/main/src/module.json`
-
-Documentação original abaixo.
-
+> Este é um fork do [Bar Brawl original](https://gitlab.com/woodentavern/foundryvtt-bar-brawl), mantido em
+> https://github.com/keitan-lend/foundryvtt-bar-brawl-t20, com ajustes para uso com **Tormenta 20 1.6.2** no
+> **Foundry VTT v14**. O fork é sincronizado automaticamente com o original (ver
+> `.github/workflows/sync-upstream.yml`) e adiciona:
+>
+> - Aplicação automática do padrão de barras (definido pelo mestre) a toda ficha nova, por tipo de ator.
+> - Exibição de atributos que possuem apenas um número (sem atual/máximo, ex.: Defesa) como um **quadrado com o
+>   valor**, mantendo a etiqueta personalizada — em vez de ficarem ocultos.
+>
+> **Instalação (link do manifest):**
+> `https://raw.githubusercontent.com/keitan-lend/foundryvtt-bar-brawl-t20/main/src/module.json`
+>
+> Documentação original abaixo.
 
 This is the repository of the resource bar addon for FoundryVTT.
 

@@ -1,3 +1,7 @@
+1.9.4-t20.2 (fork T20)
+- Corrigido: o quadrado de valor único ficava alinhado à esquerda em vez de centralizado na área reservada.
+- Corrigido: a etiqueta personalizada podia estourar para fora do quadrado de valor; a caixa agora cresce o suficiente para caber o texto.
+
 1.9.4-t20.1 (fork T20)
 - Padrão de barras definido pelo mestre agora se aplica automaticamente a toda ficha nova (recurso já existente no Bar Brawl original, mantido e documentado neste fork).
 - Confirmada compatibilidade com FoundryVTT v14 e Tormenta 20 1.6.2.

@@ -177,7 +177,6 @@ function drawBrawlBars() {
 async function createResourceBar(token, data, reservedSpace) {
     if (!data?.max && !data?.isValue) return null;
 
-
     // Create the rendering object
     let bar = new PIXI.Container();
     bar.name = data.id;
@@ -320,10 +319,23 @@ function drawResourceBar(token, bar, data, textures) {
  * @returns {number} The final height (and width) of the square.
  */
 function drawValueSquare(bar, token, data, textures, value) {
-    // The square's side length matches the height a normal bar would have.
-    bar.contentHeight = getBarHeight(token, bar.contentWidth, textures);
-    bar.contentWidth = bar.contentHeight;
-    if (bar.contentWidth <= 0) return 0;
+    // bar.contentWidth currently holds the full row width/height reserved for this bar
+    //  (same space a normal bar would fill). The square is usually much narrower, so we
+    //  keep this to center the square within that reserved area further below.
+    const availableSpace = bar.contentWidth;
+
+    // The square's side length starts at the height a normal bar would have.
+    bar.contentHeight = getBarHeight(token, availableSpace, textures);
+    if (bar.contentHeight <= 0) return 0;
+
+    // Grow the box just enough to fit the label without letting the text overflow it;
+    //  without a label (or with a short one) it stays a square.
+    const text = data.label ? `${data.label} ${value}` : `${value}`;
+    const font = CONFIG.canvasTextStyle.clone();
+    font.fontSize = bar.contentHeight;
+    const padding = Math.max(4, bar.contentHeight * 0.25);
+    const textWidth = PIXI.TextMetrics.measureText(text, font).width;
+    bar.contentWidth = Math.min(availableSpace, Math.max(bar.contentHeight, textWidth + padding));
 
     if (data.fgImage && textures[1]) {
         // A configured foreground image is drawn as a static icon (no progress crop).
@@ -335,8 +347,11 @@ function drawValueSquare(bar, token, data, textures, value) {
         drawBarBackground(bar, data, textures[0]);
     }
 
-    const text = data.label ? `${data.label} ${value}` : `${value}`;
     createBarLabel(bar, token, data, text);
+
+    // Center the box within the full row that was reserved for it.
+    const offset = Math.max(0, (availableSpace - bar.contentWidth) / 2);
+    for (const child of bar.children) child.x += offset;
 
     // Rotate left & right bars.
     if (data.position.startsWith("left")) bar.angle = -90;
